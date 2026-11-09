@@ -1,7 +1,7 @@
 ---
 name: profile
 description: Use when a new source, schema or table arrives in SQL Server, to profile it before any pipeline code, view or report is built on it. Covers schema, row counts, nulls, duplicates, keys, bad values, relationships, gaps and personal data.
-argument-hint: [schema, table, or schema.table]
+argument-hint: "[schema, table, or schema.table]"
 ---
 
 # Profile
@@ -9,12 +9,21 @@ argument-hint: [schema, table, or schema.table]
 The job: understand the data before anything is built on it.
 It writes nothing except the report.
 
-Input: a schema name, a table, or a list of tables in SQL Server.
+Input: $ARGUMENTS, the name of a source. Look it up in the table below
+to find where its tables are, and profile all of them.
+
+| Source | Server      | Database | Tables     |
+|--------|-------------|----------|------------|
+| Moed   | BG-SQL-TEST | MRR_SOLD | all tables |
+
+If the source is not in the table, stop and ask which database it is in.
+Never guess a database.
 
 ## Steps
 
 1. Count everything with real queries through sqlcmd. Never guess a number.
-2. Schema: list the tables, columns, data types, max lengths and nullability
+2. Connect with sqlcmd to the database of the source (-d from the table above).
+   Schema: list all the tables, columns, data types, max lengths and nullability
    (INFORMATION_SCHEMA.COLUMNS, sys.tables). Get the row count of each table.
 3. Keys: the declared primary keys and foreign keys (sys.key_constraints,
    sys.foreign_keys). For tables without a primary key, test which columns
