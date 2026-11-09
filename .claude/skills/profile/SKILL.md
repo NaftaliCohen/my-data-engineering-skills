@@ -22,29 +22,29 @@ Never guess a database.
 ## Steps
 
 1. Count everything with real queries through sqlcmd. Never guess a number.
-2. Connect with sqlcmd to the database of the source (-d from the table above).
+Connect with sqlcmd to the database of the source (-d from the table above).
    Schema: list all the tables, columns, data types, max lengths and nullability
    (INFORMATION_SCHEMA.COLUMNS, sys.tables). Get the row count of each table.
-3. Keys: the declared primary keys and foreign keys (sys.key_constraints,
+2. Keys: the declared primary keys and foreign keys (sys.key_constraints,
    sys.foreign_keys). For tables without a primary key, test which columns
    are unique.
-4. Data quality per column: null count and %, distinct count, min and max,
+3. Data quality per column: null count and %, distinct count, min and max,
    empty strings, columns that are always empty or always the same value.
    Count fully duplicated rows.
-5. Bad values: numbers out of a sensible range, dates in the future or
+4. Bad values: numbers out of a sensible range, dates in the future or
    before 1900, placeholder values such as 9999-12-31, 0, -1, 'N/A', 'UNKNOWN'.
    Text stored in the wrong type, e.g. dates or numbers kept as VARCHAR.
-6. Relationships: for every foreign key, declared or likely by name
+5. Relationships: for every foreign key, declared or likely by name
    (e.g. CustomerID), count the orphans: child rows with no matching parent.
-7. Gaps: for date columns, the days with no rows, and the latest date loaded.
-8. Personal data: columns that look like names, emails, phones, ID numbers,
+6. Gaps: for date columns, the days with no rows, and the latest date loaded.
+7. Personal data: columns that look like names, emails, phones, ID numbers,
    addresses or bank details. Show their values masked, never in full.
-9. Source checks: if the source has a section under "Source checks" below,
+8. Source checks: if the source has a section under "Source checks" below,
    run every check in it, and report each one as passed or failed with the
    number of rows that fail.
-10. Rank the findings by severity, each with the number of rows it affects
+9. Rank the findings by severity, each with the number of rows it affects
    and the decision it needs.
-11. Write the result as one HTML file in reports/profile/,
+10. Write the result as one HTML file in reports/profile/,
     named <schema>_<date>.html: the key numbers on top, one section per check
     with a table or a chart, the ranked findings, and the open decisions last.
 
