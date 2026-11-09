@@ -39,11 +39,37 @@ Never guess a database.
 7. Gaps: for date columns, the days with no rows, and the latest date loaded.
 8. Personal data: columns that look like names, emails, phones, ID numbers,
    addresses or bank details. Show their values masked, never in full.
-9. Rank the findings by severity, each with the number of rows it affects
+9. Source checks: if the source has a section under "Source checks" below,
+   run every check in it, and report each one as passed or failed with the
+   number of rows that fail.
+10. Rank the findings by severity, each with the number of rows it affects
    and the decision it needs.
-10. Write the result as one HTML file in reports/profile/,
+11. Write the result as one HTML file in reports/profile/,
     named <schema>_<date>.html: the key numbers on top, one section per check
     with a table or a chart, the ranked findings, and the open decisions last.
+
+## Source checks
+
+### Moed
+
+Tables: Sold_MACHBAROT, Sold_MACHBAROT_9540.
+The ETL hashes the ID number: Tz_Student is hashed into Tz_Student_Hash,
+and then Tz_Student is set to NULL.
+Run each check on each table, and report the number of failing rows.
+
+1. ID cleared: count rows where Tz_Student is NOT NULL.
+   Any row here means a real ID number is still stored. Rank as critical.
+2. Hash present: count rows where Tz_Student_Hash is NULL.
+3. Hash type: Tz_Student_Hash is numeric(15,0) in INFORMATION_SCHEMA.COLUMNS.
+   Count values that are 0, negative, or not 15 digits or fewer.
+4. Suspicious hash: list the 5 hash values that appear in the most rows,
+   as counts only. One hash on far more rows than any other usually means
+   the ETL hashed an empty or NULL ID.
+5. Across tables: count distinct hashes in each table, and how many
+   appear in both tables.
+
+Report counts only. Never show an ID number or a hash value, not even
+masked, because a hash next to its ID reveals the mapping.
 
 ## Reads
 
