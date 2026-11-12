@@ -37,7 +37,7 @@ Never guess a database.
 5. Relationships: for every foreign key, declared or likely by name
    (e.g. CustomerID), count the orphans: child rows with no matching parent.
 6. Gaps: for date columns, the days with no rows, and the latest date loaded.
-7. Personal data: columns that look like names, emails, phones, ID numbers,
+7. Personal data: columns that look like names, emails, phones, ID numbers,Tz_Student_Hash,
    addresses or bank details. Show their values masked, never in full.
 8. Source checks: if the source has a section under "Source checks" below,
    run every check in it, and report each one as passed or failed with the
