@@ -22,7 +22,7 @@ Never guess a database.
 ## Steps
 
 1. Count everything with real queries through sqlcmd. Never guess a number.
-Connect with sqlcmd to the database of the source (-d from the table above).
+   Connect with sqlcmd to the database of the source (-d from the table above).
    Schema: list all the tables, columns, data types, max lengths and nullability
    (INFORMATION_SCHEMA.COLUMNS, sys.tables). Get the row count of each table.
 2. Keys: the declared primary keys and foreign keys (sys.key_constraints,
